@@ -2,13 +2,13 @@
   "name": "bookstore",
   "version": "1.0.0",
   "description": "",
-  "homepage": "https://github.com/YanaMikulskaya/Bookstore#readme",
+  "homepage": "https://github.com/YanaMikulskaya/bookstore#readme",
   "bugs": {
-    "url": "https://github.com/YanaMikulskaya/Bookstore/issues"
+    "url": "https://github.com/YanaMikulskaya/bookstore/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/YanaMikulskaya/Bookstore.git"
+    "url": "git+https://github.com/YanaMikulskaya/bookstore.git"
   },
   "license": "ISC",
   "author": "",
@@ -17,12 +17,14 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy":"gh-pages -d dist"
   },
   "devDependencies": {
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
+    "gh-pages": "^6.3.0",
     "typescript": "^6.0.3",
     "vite": "^8.0.10"
   },
