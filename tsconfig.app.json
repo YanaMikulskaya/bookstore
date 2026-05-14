@@ -1,8 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "ES2020",
+    "useDefineForClassFields": true,
     "lib": [
-      "ES2023"
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
     ],
     "module": "ESNext",
     "skipLibCheck": true,
@@ -11,15 +14,20 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "jsx": "react-jsx",
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "types": [
-      "node"
-    ]
+    "ignoreDeprecations": "6.0", //игнор устаревающего baseUrl
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
   },
   "include": [
-    "vite.config.ts"
+    "src"
   ]
 }
