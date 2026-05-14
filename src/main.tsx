@@ -1,5 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
+import './styles/app.css';
 
 const appElement: HTMLElement | null = document.querySelector('#app');
 
