@@ -2,10 +2,10 @@ import React from 'react';
 import { Separator } from '@/components/ui/separator';
 import { Button } from './ui/button';
 import { UserPick } from './UserPick';
-import { ShoppingCartIcon } from 'lucide-react';
 import { HeaderLogo } from './HeaderLogo';
 import { HeaderSearch } from './HeaderSearch';
-import { SelectBasic } from './basicComponents/SelectBasic';
+import { ThemeToggle } from './ThemeToggle';
+import { HeaderCart } from './HeaderCart';
 
 export function Header(): React.ReactElement {
   const isLogin = true;
@@ -19,16 +19,8 @@ export function Header(): React.ReactElement {
           <HeaderSearch />
 
           <div className="flex justify-end items-center gap-2">
-            <SelectBasic
-              defaultValue="en"
-              options={[
-                { value: 'en', label: 'EN' },
-                { value: 'ru', label: 'RU' },
-              ]}
-            />
-            <Button variant="ghost" size="icon-lg" aria-label="Корзина">
-              <ShoppingCartIcon className="size-5" />
-            </Button>
+            <ThemeToggle />
+            <HeaderCart />
             {isLogin ? (
               <UserPick />
             ) : (

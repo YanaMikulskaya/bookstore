@@ -25,15 +25,11 @@ export function Search(): React.ReactElement {
   }, [decodedSearchText, dispatch]);
 
   function renderPosts(): React.ReactElement {
-    if (loading) {
-      return <div>Загрузка...</div>;
-    }
-
     if (error) {
       return <AlertBasic title="Не удалось загрузить" />;
     }
 
-    return <BookGrid search books={data} />;
+    return <BookGrid search books={data} isLoading={loading}/>;
   }
 
   return (
