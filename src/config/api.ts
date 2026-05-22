@@ -8,13 +8,13 @@ const authRefreshTokenEndpoint = '/auth/refresh';
 
 // Books
 const booksEndpoint = '/books';
-const booksByIdEndpoint = (bookId) => `/books/${bookId}`;
+//const booksByIdEndpoint = (bookId) => `/books/${bookId}`;
 const booksSearchEndpoint = '/books/search';
 const booksPostEndpoint = '/books-with-cover';
 
 // Favorites
 const booksFavoritesEndpoint = '/favorites';
-const booksFavoritesByIdEndpoint = (bookId) => `/favorites/${bookId}`;
+//const booksFavoritesByIdEndpoint = (bookId) => `/favorites/${bookId}`;
 
 export const API = {
   authRegister: authRegisterEndpoint,
@@ -22,11 +22,11 @@ export const API = {
   authUser: authUserEndpoint,
   authRefreshToken: authRefreshTokenEndpoint,
   books: booksEndpoint,
-  booksById: booksByIdEndpoint,
+  //booksById: booksByIdEndpoint,
   booksSearch: booksSearchEndpoint,
   booksPost: booksPostEndpoint,
   booksFavorites: booksFavoritesEndpoint,
-  booksFavoritesById: booksFavoritesByIdEndpoint,
+  //booksFavoritesById: booksFavoritesByIdEndpoint,
 };
 
 let refreshPromise = null;
@@ -147,7 +147,7 @@ export const getMe = async () => {
 
 // ========== КНИГИ ==========
 
-export const getBooks = async (
+/*export const getBooks = async (
   limit = null,
   offset = null,
   genre = null,
@@ -164,19 +164,19 @@ export const getBooks = async (
     : `${baseUrl}${API.books}`;
   const response = await fetch(url);
   return response.json();
-};
+};*/
 
 export const getBookById = async (id) => {
   const response = await fetch(`${baseUrl}${API.booksById(id)}`);
   return response.json();
 };
 
-export const searchBooks = async (query) => {
+/*export const searchBooks = async (query) => {
   const response = await fetch(
     `${baseUrl}${API.booksSearch}?q=${encodeURIComponent(query)}`,
   );
   return response.json();
-};
+};*/
 
 // ========== ЗАЩИЩЁННЫЕ ЗАПРОСЫ (с автоматическим обновлением токена) ==========
 
