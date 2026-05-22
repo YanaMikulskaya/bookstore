@@ -14,12 +14,8 @@ export function BookGrid({
   search,
   isLoading,
 }: BookGridProps): React.ReactElement {
-  if (!books || books.length === 0) {
-    return <AlertBasic title="Не удалось загрузить" />;
-  }
-
   if (isLoading) {
-    const skeletonCount = search ? 3 : 12; // Для поиска меньше, для сетки больше
+    const skeletonCount = search ? 3 : 18;
     return (
       <div
         className={
@@ -28,9 +24,9 @@ export function BookGrid({
             : 'grid grid-cols-1 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6'
         }
       >
-        {[...Array(skeletonCount)].map((_, i) => (
+        {[...Array(skeletonCount)].map((_, index) => (
           <SkeletonBookCard
-            key={i}
+            key={index}
             variant={search ? 'horizontal' : 'compact'}
           />
         ))}
@@ -50,6 +46,11 @@ export function BookGrid({
       </div>
     );
   }
+
+  if (!books || books.length === 0) {
+    return <AlertBasic title="Не удалось загрузить" />;
+  }
+
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
       {books.map((book: BookModel) => (

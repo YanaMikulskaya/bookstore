@@ -36,6 +36,11 @@ export type BooksPayload = {
   totalPages: BooksState['totalPages'];
 };
 
+export type JWTModel = {
+  access: string;
+  refresh: string;
+};
+
 export type CartItem = {
   id: number;
   quantity: number;

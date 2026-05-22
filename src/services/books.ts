@@ -1,4 +1,5 @@
-import { API, baseUrl } from '../config/api';
+import { get, post } from '../config/http-client';
+import { API } from '../config/api';
 import type { BookModel, FetchBooksResponse } from '@/types';
 
 export const requestBooks = async (
@@ -7,23 +8,23 @@ export const requestBooks = async (
   genre: string | null = null,
   sort: string | null = null,
 ): Promise<FetchBooksResponse> => {
-  const url = new URL(`${baseUrl}${API.books}`);
+  const response = await get(API.books, {
+    params: {
+      limit,
+      offset,
+      genre,
+      sort,
+    },
+  });
 
-  if (limit !== null) url.searchParams.append('limit', limit.toString());
-  if (offset !== null) url.searchParams.append('offset', offset.toString());
-  if (genre) url.searchParams.append('genre', genre);
-  if (sort) url.searchParams.append('sort', sort);
-
-  const response = await fetch(url.toString());
-
-  return response.json();
+  return response.data;
 };
 
 export const requestSearchBooks = async (
   query: string = '',
 ): Promise<BookModel[]> => {
-  const response = await fetch(
-    `${baseUrl}${API.booksSearch}?q=${encodeURIComponent(query)}`,
-  );
-  return response.json();
+  const response = await get(API.booksSearch, {
+    params: { q: query },
+  });
+  return response.data;
 };
