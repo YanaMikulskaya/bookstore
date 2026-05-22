@@ -9,7 +9,7 @@ type BookGridProps = {
 
 export function BookGrid({ books, search }: BookGridProps): React.ReactElement {
   if (!books || books.length === 0) {
-    return <AlertBasic title="Книги временно недоступны" />;
+    return <AlertBasic title="Книги по запросу не найдены" />;
   }
   if (search) {
     return (
