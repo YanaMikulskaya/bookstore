@@ -13,7 +13,7 @@ export function HeaderSearch(): React.ReactElement {
   const location = useLocation();
 
   useEffect(() => {
-    if (!location.pathname.startsWith('/search')) {
+    if (!location.pathname.startsWith('/books/search')) {
       setSearchValue('');
     }
   }, [location.pathname]);
@@ -30,9 +30,8 @@ export function HeaderSearch(): React.ReactElement {
     if (searchValue.trim()) {
       navigate(`/books/search/${encodeURIComponent(searchValue.trim())}`);
     }
-
-    console.log('Поиск:', searchValue);
   }
+
   return (
     <form role="search" onSubmit={handleFormSubmit}>
       <InputGroup className="max-w-xs">

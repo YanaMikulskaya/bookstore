@@ -6,13 +6,16 @@ import { ImageBasic } from '@/components/basicComponents/ImageBasic';
 import { TableBasic } from '@/components/basicComponents/TableBasic';
 import { BreadcrumbBasic } from '@/components/basicComponents/BreadcrumbBasic';
 import { BookActions } from '@/components/BookActions';
+import { SkeletonBook } from './SkeletonBook';
 
 type BookProps = {
   book: BookModel | null;
+  error?: boolean;
+  loading?: boolean;
 };
 
-export function Book({ book }: BookProps): React.ReactElement {
-  if (!book) {
+export function Book({ book, error, loading }: BookProps): React.ReactElement {
+  if (!book || error) {
     return (
       <>
         <BreadcrumbBasic />
@@ -21,6 +24,14 @@ export function Book({ book }: BookProps): React.ReactElement {
           text="Возможно, её удалили или вы перешли по неверной ссылке. Проверьте
         правильность ссылки или вернитесь на главную."
         />
+      </>
+    );
+  }
+  if (loading) {
+    return (
+      <>
+        <BreadcrumbBasic />
+        <SkeletonBook />
       </>
     );
   }
@@ -48,7 +59,7 @@ export function Book({ book }: BookProps): React.ReactElement {
               genre={genre}
               className="w-3xs"
             />
-            <BookActions forLarge />
+            <BookActions forLarge id={id} />
           </div>
           <p className="text-justify">{long_description}</p>
         </div>

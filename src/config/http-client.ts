@@ -1,10 +1,10 @@
 import axios from 'axios';
-//import { store } from '../redux/store';
-//import { refreshToken, logout } from '../redux/auth-slice';
+import { store } from '../redux/store';
+import { refreshToken, logout } from '../redux/auth-slice';
 import { baseUrl } from './api';
-//import { jwtApi } from '../utils/jwt';
+import { jwtApi } from '../utils/jwt';
 import { API } from './api';
-//import { JWTModel } from '@/types';
+import { JWTModel } from '@/types';
 
 const httpClient = axios.create({
   baseURL: baseUrl,
@@ -15,7 +15,7 @@ httpClient.interceptors.request.use(async (config) => {
     return config;
   }
 
-  /* let { jwt } = store.getState().auth;
+  let { jwt } = store.getState().auth;
 
   if (jwt) {
     if (jwtApi.isRefreshTokenExpired(jwt.refresh)) {
@@ -30,7 +30,7 @@ httpClient.interceptors.request.use(async (config) => {
 
       config.headers.Authorization = `Bearer ${jwt.access}`;
     }
-  }*/
+  }
 
   return config;
 });

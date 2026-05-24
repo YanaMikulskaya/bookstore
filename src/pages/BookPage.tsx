@@ -1,16 +1,21 @@
+import { useEffect } from 'react';
+import { useParams } from 'react-router';
+import { useAppSelector, useAppDispatch } from '../redux/store';
 import { Book } from '@/components/Book';
-import { data } from '@/components/data';
+import { clearBook, fetchBook } from '@/redux/book-sliсe';
 
 export function BookPage(): React.ReactElement {
-  const getBookById = (id: number) => {
-    const book = data.find((book) => book.id === id);
-    if (!book) {
-      console.error(`Книга с ID ${id} не найдена`);
-    }
-    return book || null;
-  };
+  const { bookId } = useParams();
+  const { data, error, loading } = useAppSelector((state) => state.book);
+  const dispatch = useAppDispatch();
 
-  const currentBook = getBookById(16);
+  useEffect(() => {
+    dispatch(fetchBook(Number(bookId)));
 
-  return <Book book={currentBook} />;
+    return () => {
+      dispatch(clearBook());
+    };
+  }, []);
+
+  return <Book book={data} error={error} loading={loading} />;
 }
