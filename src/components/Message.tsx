@@ -1,4 +1,4 @@
-//import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { Button } from './ui/button';
 
 type MessageProps = {
@@ -10,7 +10,7 @@ type MessageProps = {
 };
 
 export function Message(props: MessageProps): React.ReactElement {
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -32,8 +32,9 @@ export function Message(props: MessageProps): React.ReactElement {
 
       {props.link && (
         <Button
+          className="mt-3 w-full"
           onClick={() => {
-            console.log('home');
+            navigate(props.link || '/');
           }}
         >
           {props.button}

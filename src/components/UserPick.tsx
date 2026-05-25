@@ -1,33 +1,38 @@
-import React from 'react';
-import { Skeleton } from './ui/skeleton';
 import { Avatar, AvatarFallback } from './ui/avatar';
 
-export function UserPick(): React.ReactElement {
-  const userInitials = 'ЯМ';
-  const userName = 'Яна Микульская';
-  const userRole = 'Администратор';
-  const isLoading = false;
+type UserPickProps = {
+  name: string;
+  role: string;
+};
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center gap-2">
-        <Skeleton className="h-10 w-10 rounded-full" />
-        <div className="space-y-1">
-          <Skeleton className="h-4 w-[100px]" />
-          <Skeleton className="h-3 w-[70px]" />
-        </div>
-      </div>
-    );
-  }
+export function UserPick({ name, role }: UserPickProps): React.ReactElement {
+  const getUserInitials = (name: string): string => {
+    if (!name) return '';
+
+    const words = name.split(' ');
+    if (words.length > 1) {
+      return words
+        .map((word) => word[0])
+        .join('')
+        .toUpperCase();
+    }
+
+    const matches = name.match(/[A-ZА-Я]/g);
+    return matches
+      ? matches.join('').toUpperCase()
+      : name.charAt(0).toUpperCase();
+  };
 
   return (
     <div className="flex items-center gap-2">
       <Avatar size="lg">
-        <AvatarFallback>{userInitials}</AvatarFallback>
+        <AvatarFallback>{getUserInitials(name)}</AvatarFallback>
       </Avatar>
       <div className="space-y-1">
-        <p className="text-sm font-medium">{userName}</p>
-        <p className="text-xs text-muted-foreground">{userRole}</p>
+        <p className="text-sm font-medium">{name}</p>
+        <p className="text-xs text-muted-foreground">
+          {role === 'admin' ? 'Администратор' : 'Пользователь'}
+        </p>
       </div>
     </div>
   );

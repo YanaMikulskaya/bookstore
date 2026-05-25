@@ -1,4 +1,3 @@
-import { BookModel } from './data';
 import { GenreBadge } from './GenreBadge';
 import {
   Card,
@@ -10,9 +9,11 @@ import {
 } from '@/components/ui/card';
 import { ImageBasic } from './basicComponents/ImageBasic';
 import { BookActions } from './BookActions';
+import { Link } from 'react-router';
+import type { CartBookModel, BookModel } from '@/types';
 
 type BookCardProps = {
-  data: BookModel;
+  data: BookModel | CartBookModel;
   variant?: 'compact' | 'horizontal' | 'modal' | 'cart';
 };
 
@@ -57,13 +58,15 @@ export function BookCard({
         />
         <CardHeader>
           <div className="text-sm font-bold text-primary">{price} руб.</div>
-          <CardTitle className="text-sm">{title}</CardTitle>
+          <CardTitle className="text-sm">
+            <Link to={`/books/${id}`}>{title}</Link>
+          </CardTitle>
           <CardDescription className="text-[10px]">
             {author}, {year}
           </CardDescription>
         </CardHeader>
         <CardFooter className="mt-auto">
-          <BookActions forSmall />
+          <BookActions forSmall id={id} />
         </CardFooter>
       </Card>
     );
@@ -96,7 +99,7 @@ export function BookCard({
             <p>{short_description}</p>
           </CardContent>
         )}
-        {!isCart && <BookActions />}
+        {!isCart && <BookActions id={id} />}
       </div>
     </Card>
   );

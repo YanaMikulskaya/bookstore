@@ -1,9 +1,8 @@
 import { createBrowserRouter, redirect } from 'react-router';
-import { Activation } from './pages/Activation';
-import { ActivationLinkParser } from './pages/ActivationLinkParser';
+import { VerifyEmail } from './pages/VerifyEmail';
 import { BookPage } from './pages/BookPage';
 import { BookCatalog } from './pages/BooksCatalog';
-import { BookFavorites } from './pages/BooksFavorites';
+import { BooksFavorites } from './pages/BooksFavorites';
 import { CartPage } from './pages/CartPage';
 import { Login } from './pages/Login';
 import { RegistrationConfirmation } from './pages/RegistrationConfirmation';
@@ -27,7 +26,7 @@ export const routers: RouteObject[] = [
       },
       {
         path: '/books/favorites/:currentPage',
-        Component: BookFavorites,
+        Component: BooksFavorites,
       },
       {
         path: '/books/:bookId',
@@ -46,12 +45,8 @@ export const routers: RouteObject[] = [
         Component: Login,
       },
       {
-        path: '/auth/activate/link-parser',
-        Component: ActivationLinkParser,
-      },
-      {
-        path: '/auth/activate/:uid/:token',
-        Component: Activation,
+        path: '/auth/verify-email',
+        Component: VerifyEmail,
       },
       {
         path: '/auth/registration-confirmation',

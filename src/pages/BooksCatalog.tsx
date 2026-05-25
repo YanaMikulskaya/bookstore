@@ -24,7 +24,7 @@ export function BookCatalog(): React.ReactElement {
     dispatch(fetchBooks({ limit: PAGINATION.LIMIT, offset }));
   }, [currentPage, dispatch]);
 
-  function renderPosts(): React.ReactElement {
+  function renderBooks(): React.ReactElement {
     if (error) {
       return <AlertBasic title="Не удалось загрузить" />;
     }
@@ -36,7 +36,7 @@ export function BookCatalog(): React.ReactElement {
     <>
       <SectionHeader />
       <Pagination />
-      {renderPosts()}
+      {renderBooks()}
       <Pagination />
     </>
   );

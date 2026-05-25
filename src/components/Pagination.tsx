@@ -13,7 +13,7 @@ import {
 } from './basicComponents/PaginationLinkBasic';
 import { SkeletonPagination } from './SkeletonPagination';
 import { buildPagination } from '@/utils/buildPagination';
-import type { BooksState } from '@/types';
+import type { BooksState, FavoritesState } from '@/types';
 
 export function Pagination({
   favorites = false,
@@ -26,17 +26,25 @@ export function Pagination({
     (state): BooksState => state.books,
   );
 
-  const nextPage = pageNumber + 1 > totalPages ? 1 : pageNumber + 1;
-  const prevPage = pageNumber - 1 <= 0 ? totalPages : pageNumber - 1;
+  const { favoritesTotalPages, favoritesError, favoritesLoading } =
+    useAppSelector((state): FavoritesState => state.favorites);
+
+  const paginationTotalPages = favorites ? favoritesTotalPages : totalPages;
+  const paginationLoading = favorites ? favoritesLoading : loading;
+  const paginationError = favorites ? favoritesError : error;
+
+  const nextPage = pageNumber + 1 > paginationTotalPages ? 1 : pageNumber + 1;
+  const prevPage = pageNumber - 1 <= 0 ? paginationTotalPages : pageNumber - 1;
   const paginationNavigation = favorites ? '/books/favorites/' : '/books/all/';
-  if (loading) {
+
+  if (paginationLoading) {
     return <SkeletonPagination pageCount={totalPages} />;
   }
-  if (totalPages <= 1 || error || data.length === 0) {
+  if (paginationTotalPages <= 1 || paginationError || data.length === 0) {
     return null;
   }
 
-  const paginationScheme = buildPagination(pageNumber, totalPages);
+  const paginationScheme = buildPagination(pageNumber, paginationTotalPages);
 
   return (
     <PaginationEl className="my-3">
