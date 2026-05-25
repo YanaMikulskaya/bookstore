@@ -1,3 +1,4 @@
+// Model
 export type BookModel = {
   id: number;
   title: string;
@@ -5,58 +6,26 @@ export type BookModel = {
   year: number;
   genre: string;
   price: string;
-  cover_url: string;
-  short_description: string;
-  long_description: string;
+  coverUrl: string;
+  shortDescription: string;
+  longDescription: string;
 };
 
-export type BookState = {
-  data: BookModel | null;
-  loading: boolean;
-  error: boolean;
+export type FavoritesBookModel = BookModel & {
+  favoritedAt?: string;
 };
 
-export type FetchBooksResponse = {
-  data: BookModel[];
-  total: number;
-  limit: number;
-  ofset: number;
+export type CartBookModel = BookModel & {
+  quantity: number;
 };
 
-export type FetchBooksParams = {
-  limit: number;
-  offset: number;
-  genre?: string | null;
-  sort?: string | null;
-};
-
-export type BooksState = {
-  data: BookModel[];
-  totalPages: number;
-  loading: boolean;
-  error: boolean;
-};
-
-export type BooksPayload = {
-  data: BooksState['data'];
-  totalPages: BooksState['totalPages'];
+export type TokenModel = {
+  token: string;
 };
 
 export type JWTModel = {
   access: string;
   refresh: string;
-};
-
-export type RegisterData = {
-  name: string;
-  email: string;
-  password: string;
-  adminSecret?: string;
-};
-
-export type CartItem = {
-  id: number;
-  quantity: number;
 };
 
 export type UserModel = {
@@ -66,10 +35,35 @@ export type UserModel = {
   role: 'user' | 'admin';
 };
 
-export type RegisterPromise = {
-  success: boolean;
-  message: string;
-  user: UserModel;
+export type CartItemModel = {
+  bookId: number;
+  quantity: number;
+};
+
+// Data
+export type RegisterData = {
+  name: string;
+  email: string;
+  password: string;
+  adminSecret?: string;
+};
+
+export type LoginData = {
+  email: string;
+  password: string;
+};
+// State
+export type BookState = {
+  data: BookModel | null;
+  loading: boolean;
+  error: boolean;
+};
+
+export type BooksState = {
+  data: BookModel[];
+  totalPages: number;
+  loading: boolean;
+  error: boolean;
 };
 
 export type AuthState = {
@@ -81,25 +75,41 @@ export type AuthState = {
   jwt: JWTModel | null;
 };
 
-export type TokenModel = {
-  token: string;
+export type FavoritesState = {
+  favoritesIds: number[];
+  favoritesTotalPages: number;
+  shownFavorites: FavoritesBookModel[];
+  favoritesLoading: boolean;
+  favoritesError: boolean;
 };
 
-export type ActivatePromise = {
+export type CartState = {
+  cart: CartBookModel[];
+  cartItems: CartItemModel[];
+  totalQuantity: number;
+  cartLoading: boolean;
+  cartError: boolean;
+};
+
+// Response
+export type FetchBooksResponse = {
+  data: BookModel[];
+  total: number;
+  limit: number;
+  ofset: number;
+};
+
+export type RegisterResponse = {
+  success: boolean;
+  message: string;
+  user: UserModel;
+};
+
+export type ActivateResponse = {
   accessToken: string;
   refreshToken: string;
   user: UserModel;
   message: string;
-};
-
-export type ActivatePayload = {
-  jwt: JWTModel;
-  user: UserModel;
-};
-
-export type LoginData = {
-  email: string;
-  password: string;
 };
 
 export type LoginResponse = {
@@ -108,30 +118,17 @@ export type LoginResponse = {
   user: UserModel;
 };
 
-export type Pagination = {
+export type PaginationResponse = {
   offset: number;
   limit: number;
   total: number;
   hasMore: boolean;
 };
 
-export type FavoritesBookModel = {
-  id: number;
-  title: string;
-  author: string;
-  year: number;
-  genre: string;
-  price: string;
-  cover_url: string;
-  short_description: string;
-  long_description: string;
-  favorited_at?: string;
-};
-
 export type FetchFavoritesResponse = {
   success: boolean;
   data: FavoritesBookModel[];
-  pagination: Pagination;
+  pagination: PaginationResponse;
 };
 
 export type ToggleFavoritesResponse = {
@@ -141,20 +138,28 @@ export type ToggleFavoritesResponse = {
   bookId: number;
   bookTitle: string;
   data?: FavoritesBookModel[];
-  pagination?: Pagination;
+  pagination?: PaginationResponse;
 };
 
-export type FavoritesState = {
-  favoritesIds: number[];
-  favoritesTotalPages: number;
-  shownFavorites: BookModel[] | FavoritesBookModel[];
-  favoritesLoading: boolean;
-  favoritesError: boolean;
+export type FetchCartResponse = {
+  data: CartBookModel[];
+  totalQuantity: number;
 };
 
-export type FavoritesPayload = {
-  favoritesTotalPages: number;
-  shownFavorites: BookModel[] | FavoritesBookModel[];
+export type FetchCartItemsResponse = {
+  items: CartItemModel[];
+};
+
+export type ModifyCartResponse = FetchBooksResponse & {
+  totalQuantity: number;
+};
+
+// Params
+export type FetchBooksParams = {
+  limit: number;
+  offset: number;
+  genre?: string | null;
+  sort?: string | null;
 };
 
 export type FetchFavoritesParams = {
@@ -167,34 +172,18 @@ export type ToggleFavoritesParams = {
   act: 'remove' | 'add';
 };
 
-export type CartBookModel = BookModel & {
-  quantity: number;
+// Plyload
+export type BooksPayload = {
+  data: BooksState['data'];
+  totalPages: BooksState['totalPages'];
 };
 
-export type CartItemModel = {
-  book_id: number;
-  quantity: number;
+export type ActivatePayload = {
+  jwt: JWTModel;
+  user: UserModel;
 };
 
-export type GetCartResponse = {
-  data: CartBookModel[];
-  totalQuantity: number;
-};
-
-export type GetCartItemsResponse = {
-  items: CartItemModel[];
-};
-
-export type ModifyCartResponse = {
-  message: string;
-  data: CartBookModel[];
-  totalQuantity: number;
-};
-
-export type CartState = {
-  cart: CartBookModel[];
-  cartItems: CartItemModel[];
-  totalQuantity: number;
-  cartLoading: boolean;
-  cartError: boolean;
+export type FavoritesPayload = {
+  favoritesTotalPages: number;
+  shownFavorites: BookModel[] | FavoritesBookModel[];
 };

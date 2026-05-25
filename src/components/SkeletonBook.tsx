@@ -29,7 +29,7 @@ export function SkeletonBook(): React.ReactElement {
           </div>
         </div>
 
-        {/* Скелетон для long_description */}
+        {/* Скелетон для longDescription */}
         <div className="space-y-2 mt-4">
           <Skeleton className="h-4 w-full" />
           <Skeleton className="h-4 w-full" />

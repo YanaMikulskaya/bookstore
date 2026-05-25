@@ -21,16 +21,16 @@ export function BookActions({
   );
 
   const isInCart = useAppSelector((state) =>
-    state.cart.cartItems.some((item: CartItemModel) => item.book_id === id),
+    state.cart.cartItems.some((item: CartItemModel) => item.bookId === id),
   );
 
-  const jwt = useAppSelector((state) => state.auth.jwt);
-  const isAuth = useMemo(() => !!jwt, [jwt]);
+  const isAuth = useAppSelector((state) => !!state.auth.jwt);
 
   const dispatch = useAppDispatch();
 
   const handleCartToggle = useCallback(() => {
     if (isAuth) {
+      console.log(isAuth);
       dispatch(toggleCart(id));
     } else {
       dispatch(toggleCartLS(id));

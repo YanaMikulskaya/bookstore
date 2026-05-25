@@ -15,7 +15,7 @@ export function SectionHeader(): React.ReactElement {
   };
 
   return (
-    <>
+    <div className="flex flex-col gap-4">
       <Title>Каталог книг</Title>
       <TabsBasic
         value={getActiveTab()}
@@ -28,8 +28,7 @@ export function SectionHeader(): React.ReactElement {
             icon: <HeartIcon />,
           },
         ]}
-        className="mb-6"
       />
-    </>
+    </div>
   );
 }

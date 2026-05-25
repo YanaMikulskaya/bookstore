@@ -1,12 +1,12 @@
 import { get, post, put, del } from '@/config/http-client';
 import { API } from '@/config/api';
 import type {
-  GetCartResponse,
-  GetCartItemsResponse,
+  FetchCartResponse,
+  FetchCartItemsResponse,
   ModifyCartResponse,
 } from '@/types';
 
-export const getCart = async (): Promise<GetCartResponse> => {
+export const getCart = async (): Promise<FetchCartResponse> => {
   const response = await get(API.booksCart);
   return response.data;
 };
@@ -43,7 +43,7 @@ export const clearCart = async (): Promise<ModifyCartResponse> => {
   return response.data;
 };
 // Получить только ID и количество
-export const getCartItems = async (): Promise<GetCartItemsResponse> => {
+export const getCartItems = async (): Promise<FetchCartItemsResponse> => {
   const response = await get(API.booksCartItems);
   return response.data;
 };

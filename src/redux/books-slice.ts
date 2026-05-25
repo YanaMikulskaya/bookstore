@@ -6,7 +6,6 @@ import type {
   BooksPayload,
 } from '@/types';
 import { requestBooks, requestSearchBooks } from '@/services/books';
-import { PAGINATION } from '../config/pagination';
 
 export const fetchBooks = createAsyncThunk(
   'books/fetchBooks',
@@ -17,7 +16,7 @@ export const fetchBooks = createAsyncThunk(
     try {
       const books = await requestBooks(limit, offset, genre, sort);
 
-      const totalPages = Math.ceil(books.total / PAGINATION.LIMIT);
+      const totalPages = Math.ceil(books.total / limit);
 
       return { data: books.data, totalPages };
     } catch (error) {

@@ -5,6 +5,8 @@ import { getUser, logout } from '@/redux/auth-slice';
 import { Button } from './ui/button';
 import { SkeletonUserPick } from './SkeletonUserPick';
 import { UserPick } from './UserPick';
+import { resetFavorites } from '@/redux/favorites-slice';
+import { resetCart } from '@/redux/cart-slice';
 
 export function HeaderUser(): React.ReactElement {
   const { user, loading, jwt } = useAppSelector((state) => state.auth);
@@ -29,6 +31,8 @@ export function HeaderUser(): React.ReactElement {
         <Button
           onClick={() => {
             dispatch(logout());
+            dispatch(resetFavorites());
+            dispatch(resetCart());
           }}
         >
           Выйти

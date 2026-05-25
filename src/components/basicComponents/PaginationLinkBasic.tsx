@@ -34,7 +34,7 @@ export function PaginationLinkBasic({
 
 export function PaginationPreviousBasic({
   className,
-  text = 'Предыдущая',
+  text = '',
   ...props
 }: React.ComponentProps<typeof PaginationLinkBasic> & { text?: string }) {
   return (
@@ -52,7 +52,7 @@ export function PaginationPreviousBasic({
 
 export function PaginationNextBasic({
   className,
-  text = 'Следующая',
+  text = '',
   ...props
 }: React.ComponentProps<typeof PaginationLinkBasic> & { text?: string }) {
   return (
