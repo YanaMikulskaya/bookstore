@@ -21,20 +21,12 @@ export function BookCard({
   data,
   variant = 'compact',
 }: BookCardProps): React.ReactElement {
-  const {
-    id,
-    title,
-    author,
-    year,
-    genre,
-    price,
-    cover_url,
-    short_description,
-  } = data;
+  const { id, title, author, year, genre, price, coverUrl, shortDescription } =
+    data;
   if (!data) {
     return <></>;
   }
-  const imageUrl = `http://localhost:3001${cover_url}`;
+  const imageUrl = `http://localhost:3001${coverUrl}`;
 
   const isHorizontal =
     variant === 'horizontal' || variant === 'modal' || variant === 'cart';
@@ -94,9 +86,9 @@ export function BookCard({
           {author}, {year}
         </CardDescription>
 
-        {short_description && (
+        {shortDescription && (
           <CardContent className="p-0">
-            <p>{short_description}</p>
+            <p>{shortDescription}</p>
           </CardContent>
         )}
         {!isCart && <BookActions id={id} />}

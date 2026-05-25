@@ -45,11 +45,9 @@ export const initializeFavorites = createAsyncThunk(
           }
         }
 
-        // Сохраняем ID в localStorage (объединённый список)
-        const allIds = [...serverIds, ...toAdd];
-        localStorage.setItem('favorites', JSON.stringify(allIds));
+        const allIds = await getFavoritesIds();
 
-        return allIds;
+        return allIds.ids;
       } else {
         return localFavorites;
       }
@@ -135,8 +133,6 @@ export const toggleFavorites = createAsyncThunk(
         await removeFromFavorites(id, 0, 0);
       }
       const serverIds = await getFavoritesIds();
-
-      localStorage.setItem('favorites', JSON.stringify(serverIds.ids));
 
       return serverIds.ids;
     } catch (error) {
@@ -257,6 +253,6 @@ export const favoritesSlice = createSlice({
   },
 });
 
-export const { clearFavoritesError } = favoritesSlice.actions;
+export const { clearFavoritesError, resetFavorites } = favoritesSlice.actions;
 
 export const favoritesReducer = favoritesSlice.reducer;

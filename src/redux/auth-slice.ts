@@ -118,8 +118,10 @@ export const logout = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       localStorage.removeItem('jwt');
+      localStorage.removeItem('favorites');
+      localStorage.removeItem('cart');
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.error || 'Ошибка входа');
+      return rejectWithValue(error.response?.data?.error || 'Ошибка выхода');
     }
   },
 );
@@ -246,6 +248,8 @@ export const authSlice = createSlice({
       state.loading = true;
       state.error = false;
       state.errorMessage = null;
+      state.jwt = null;
+      state.isActivated = false;
     });
     builder.addCase(logout.fulfilled, (state: AuthState) => {
       state.user = null;
@@ -259,6 +263,8 @@ export const authSlice = createSlice({
       state.error = true;
       state.errorMessage = null;
       state.loading = false;
+      state.jwt = null;
+      state.isActivated = false;
     });
   },
 });

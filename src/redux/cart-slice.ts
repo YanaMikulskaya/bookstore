@@ -31,15 +31,15 @@ export const initializeCart = createAsyncThunk(
         // Находим книги, которых нет на сервере, или с другим количеством
         for (const localItem of localCart) {
           const serverItem = items.find(
-            (item) => item.book_id === localItem.book_id,
+            (item) => item.bookId === localItem.bookId,
           );
 
           if (!serverItem) {
             // Нет на сервере - добавляем
-            await addToCart(localItem.book_id, localItem.quantity);
+            await addToCart(localItem.bookId, localItem.quantity);
           } else if (serverItem.quantity !== localItem.quantity) {
             // Есть, но количество разное - обновляем на сервере
-            await updateCartItem(localItem.book_id, localItem.quantity);
+            await updateCartItem(localItem.bookId, localItem.quantity);
           }
         }
 
@@ -50,8 +50,6 @@ export const initializeCart = createAsyncThunk(
           0,
         );
 
-        // Сохраняем в localStorage
-        localStorage.setItem('cart', JSON.stringify(updatedItems.items));
         return {
           cartItems: updatedItems.items,
           totalQuantity: totalQuantity,
@@ -90,7 +88,7 @@ export const fetchCartLS = createAsyncThunk(
       const localCart: CartItemModel[] = saved ? JSON.parse(saved) : [];
 
       const cartPromises = localCart.map(async (item) => {
-        const book = await requestBook(item.book_id);
+        const book = await requestBook(item.bookId);
         return {
           ...book,
           quantity: item.quantity, // добавляем количество из корзины
@@ -118,15 +116,15 @@ export const toggleCartLS = createAsyncThunk(
       const saved = localStorage.getItem('cart');
       const localCart: CartItemModel[] = saved ? JSON.parse(saved) : [];
 
-      const existingIndex = localCart.findIndex((item) => item.book_id === id);
+      const existingIndex = localCart.findIndex((item) => item.bookId === id);
       let newCart: CartItemModel[];
 
       if (existingIndex !== -1) {
         // Книга есть - удаляем
-        newCart = localCart.filter((item) => item.book_id !== id);
+        newCart = localCart.filter((item) => item.bookId !== id);
       } else {
         // Книги нет - добавляем 1
-        newCart = [...localCart, { book_id: id, quantity: 1 }];
+        newCart = [...localCart, { bookId: id, quantity: 1 }];
       }
 
       const totalQuantity = newCart.reduce(
@@ -153,7 +151,7 @@ export const toggleCart = createAsyncThunk(
     try {
       // Сначала проверяем, есть ли книга в корзине
       const { items } = await getCartItems();
-      const existingItem = items.find((item) => item.book_id === id);
+      const existingItem = items.find((item) => item.bookId === id);
 
       if (existingItem) {
         // Книга есть - удаляем
@@ -169,10 +167,8 @@ export const toggleCart = createAsyncThunk(
         0,
       );
 
-      localStorage.setItem('cart', JSON.stringify(items));
-
       return {
-        cartItems: items,
+        cartItems: updatedCart.items,
         totalQuantity: totalQuantity,
       };
     } catch (error) {
@@ -193,7 +189,7 @@ export const updateCartQuantityLS = createAsyncThunk(
       const saved = localStorage.getItem('cart');
       const localCart: CartItemModel[] = saved ? JSON.parse(saved) : [];
 
-      const existingIndex = localCart.findIndex((item) => item.book_id === id);
+      const existingIndex = localCart.findIndex((item) => item.bookId === id);
 
       if (existingIndex === -1) {
         return rejectWithValue(new Error('Книга не найдена в корзине'));
@@ -246,8 +242,6 @@ export const updateCartQuantityServer = createAsyncThunk(
 
       const { items } = await getCartItems();
       const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
-
-      localStorage.setItem('cart', JSON.stringify(items));
 
       return {
         cartItems: items,

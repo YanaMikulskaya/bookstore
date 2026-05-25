@@ -7,8 +7,9 @@ import type {
   ToggleFavoritesResponse,
 } from '@/types';
 
+// Получить список книг
 export const requestBooks = async (
-  limit: number = 20,
+  limit: number = 100,
   offset: number = 0,
   genre: string | null = null,
   sort: string | null = null,
@@ -25,6 +26,7 @@ export const requestBooks = async (
   return response.data;
 };
 
+// Получить книги по поисковому запросу
 export const requestSearchBooks = async (
   query: string = '',
 ): Promise<BookModel[]> => {
@@ -34,13 +36,15 @@ export const requestSearchBooks = async (
   return response.data;
 };
 
+// Получить книгу
 export const requestBook = async (bookId: number): Promise<BookModel> => {
   const response = await get(`${API.books}/${bookId}`);
   return response.data;
 };
 
+// Получить избранное
 export const getFavorites = async (
-  limit: number = 18,
+  limit: number = 100,
   offset: number = 0,
 ): Promise<FetchFavoritesResponse> => {
   const response = await get(API.booksFavorites, {
@@ -81,6 +85,7 @@ export const removeFromFavorites = async (
   });
   return response.data;
 };
+
 // ID избранного
 export const getFavoritesIds = async (): Promise<{ ids: number[] }> => {
   const response = await get(API.booksFavoritesIds);

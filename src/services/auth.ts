@@ -2,25 +2,25 @@ import { get, post } from '../config/http-client';
 import { API } from '../config/api';
 import type {
   RegisterData,
-  RegisterPromise,
   TokenModel,
-  ActivatePromise,
+  ActivateResponse,
   UserModel,
   JWTModel,
   LoginData,
   LoginResponse,
+  RegisterResponse,
 } from '@/types';
 
 export const requestRegistration = async (
   data: RegisterData,
-): Promise<RegisterPromise> => {
+): Promise<RegisterResponse> => {
   const response = await post(API.authRegister, data);
   return response.data;
 };
 
 export const requestActivate = async (
   data: TokenModel,
-): Promise<ActivatePromise> => {
+): Promise<ActivateResponse> => {
   const response = await post(API.authActivate, data);
   return response.data;
 };

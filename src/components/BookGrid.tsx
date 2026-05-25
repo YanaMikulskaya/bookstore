@@ -52,7 +52,7 @@ export function BookGrid({
   }
 
   return (
-    <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 mt-3">
       {books.map((book: BookModel) => (
         <BookCard variant="compact" key={book.id} data={book} />
       ))}

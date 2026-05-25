@@ -1,6 +1,5 @@
 import { ToggleBasic } from './basicComponents/ToggleBasic';
 import { HeartIcon } from 'lucide-react';
-import { useMemo, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { toggleFavorites, toggleFavoritesLS } from '@/redux/favorites-slice';
 import type { CartItemModel } from '@/types';
@@ -21,23 +20,22 @@ export function BookActions({
   );
 
   const isInCart = useAppSelector((state) =>
-    state.cart.cartItems.some((item: CartItemModel) => item.book_id === id),
+    state.cart.cartItems.some((item: CartItemModel) => item.bookId === id),
   );
 
-  const jwt = useAppSelector((state) => state.auth.jwt);
-  const isAuth = useMemo(() => !!jwt, [jwt]);
+  const isAuth = useAppSelector((state) => !!state.auth.jwt);
 
   const dispatch = useAppDispatch();
 
-  const handleCartToggle = useCallback(() => {
+  const handleCartToggle = () => {
     if (isAuth) {
       dispatch(toggleCart(id));
     } else {
       dispatch(toggleCartLS(id));
     }
-  }, [isInCart]);
+  };
 
-  const handleFavoriteToggle = useCallback(() => {
+  const handleFavoriteToggle = () => {
     const action = isFavorite ? 'remove' : 'add';
 
     if (isAuth) {
@@ -45,7 +43,7 @@ export function BookActions({
     } else {
       dispatch(toggleFavoritesLS(id));
     }
-  }, [isAuth, isFavorite, id, dispatch]);
+  };
 
   return (
     <div

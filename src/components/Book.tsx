@@ -7,6 +7,7 @@ import { TableBasic } from '@/components/basicComponents/TableBasic';
 import { BreadcrumbBasic } from '@/components/basicComponents/BreadcrumbBasic';
 import { BookActions } from '@/components/BookActions';
 import { SkeletonBook } from './SkeletonBook';
+import { CarouselGenre } from './CaroselGenre';
 
 type BookProps = {
   book: BookModel | null;
@@ -35,7 +36,7 @@ export function Book({ book, error, loading }: BookProps): React.ReactElement {
       </>
     );
   }
-  const { id, title, author, year, genre, price, cover_url, long_description } =
+  const { id, title, author, year, genre, price, coverUrl, longDescription } =
     book;
 
   return (
@@ -44,7 +45,7 @@ export function Book({ book, error, loading }: BookProps): React.ReactElement {
       <Title>{title}</Title>
       <div className="flex flex-col items-center md:flex-row md:items-start gap-10 mb-3">
         <ImageBasic
-          src={`http://localhost:3001${cover_url}`}
+          src={`http://localhost:3001${coverUrl}`}
           alt={title}
           width="300px"
           ratio={10 / 16}
@@ -61,9 +62,10 @@ export function Book({ book, error, loading }: BookProps): React.ReactElement {
             />
             <BookActions forLarge id={id} />
           </div>
-          <p className="text-justify">{long_description}</p>
+          <p className="text-justify">{longDescription}</p>
         </div>
       </div>
+      <CarouselGenre genre={genre}></CarouselGenre>
     </>
   );
 }
