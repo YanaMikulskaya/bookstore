@@ -168,7 +168,7 @@ export const toggleCart = createAsyncThunk(
       );
 
       return {
-        cartItems: items,
+        cartItems: updatedCart.items,
         totalQuantity: totalQuantity,
       };
     } catch (error) {

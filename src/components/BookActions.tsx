@@ -1,6 +1,5 @@
 import { ToggleBasic } from './basicComponents/ToggleBasic';
 import { HeartIcon } from 'lucide-react';
-import { useMemo, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { toggleFavorites, toggleFavoritesLS } from '@/redux/favorites-slice';
 import type { CartItemModel } from '@/types';
@@ -28,16 +27,15 @@ export function BookActions({
 
   const dispatch = useAppDispatch();
 
-  const handleCartToggle = useCallback(() => {
+  const handleCartToggle = () => {
     if (isAuth) {
-      console.log(isAuth);
       dispatch(toggleCart(id));
     } else {
       dispatch(toggleCartLS(id));
     }
-  }, [isInCart]);
+  };
 
-  const handleFavoriteToggle = useCallback(() => {
+  const handleFavoriteToggle = () => {
     const action = isFavorite ? 'remove' : 'add';
 
     if (isAuth) {
@@ -45,7 +43,7 @@ export function BookActions({
     } else {
       dispatch(toggleFavoritesLS(id));
     }
-  }, [isAuth, isFavorite, id, dispatch]);
+  };
 
   return (
     <div

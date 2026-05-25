@@ -24,7 +24,7 @@ export function HeaderUser(): React.ReactElement {
     return <SkeletonUserPick />;
   }
 
-  if (user) {
+  if (jwt && user) {
     return (
       <div className="flex items-center gap-2">
         <UserPick name={user.name} role={user.role} />
