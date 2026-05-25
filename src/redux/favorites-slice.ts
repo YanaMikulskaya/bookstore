@@ -2,7 +2,7 @@ import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
   requestBook,
-  getUserFavorites,
+  getFavorites,
   addToFavorites,
   removeFromFavorites,
   getFavoritesIds,
@@ -88,7 +88,7 @@ export const fetchFavorites = createAsyncThunk(
   'favorites/fetchFavorites',
   async ({ limit, offset }: FetchFavoritesParams, { rejectWithValue }) => {
     try {
-      const serverFavorites = await getUserFavorites(limit, offset);
+      const serverFavorites = await getFavorites(limit, offset);
       const data = serverFavorites.data;
       const totalFavorites = serverFavorites.pagination.total;
       const totalPages = Math.ceil(totalFavorites / limit);

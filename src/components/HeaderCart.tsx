@@ -1,11 +1,13 @@
+import { useAppSelector } from '@/redux/store';
 import { Badge } from '@/components/ui/badge';
 import { Button } from './ui/button';
 import { ShoppingCartIcon } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
 export function HeaderCart(): React.ReactElement {
-  const count = 10;
+  const count = useAppSelector((state) => state.cart.totalQuantity);
   const navigate = useNavigate();
+
   return (
     <>
       <Button

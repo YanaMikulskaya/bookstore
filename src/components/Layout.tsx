@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { Outlet } from 'react-router';
 import { initializeFavorites } from '@/redux/favorites-slice';
+import { initializeCart } from '@/redux/cart-slice';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { Main } from './Main';
@@ -12,6 +13,7 @@ export function Layout(): React.ReactElement {
 
   useEffect(() => {
     dispatch(initializeFavorites(isAuth));
+    dispatch(initializeCart(isAuth));
   }, [dispatch, isAuth]);
 
   return (

@@ -21,7 +21,7 @@ httpClient.interceptors.request.use(async (config) => {
     if (jwtApi.isRefreshTokenExpired(jwt.refresh)) {
       jwtApi.removeFromLocalStorage();
       store.dispatch(logout());
-      window.location.href = '/auth/sign-in';
+      window.location.href = '/bookstore/auth/login';
     } else {
       if (jwtApi.isAccessTokenExpired(jwt.access)) {
         await store.dispatch(refreshToken({ refresh: jwt.refresh }));

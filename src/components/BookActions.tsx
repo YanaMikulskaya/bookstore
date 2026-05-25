@@ -1,9 +1,10 @@
 import { ToggleBasic } from './basicComponents/ToggleBasic';
 import { HeartIcon } from 'lucide-react';
-import { useState, useMemo, useCallback } from 'react';
+import { useMemo, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { toggleFavorites, toggleFavoritesLS } from '@/redux/favorites-slice';
-
+import type { CartItemModel } from '@/types';
+import { toggleCart, toggleCartLS } from '@/redux/cart-slice';
 type BookActionsProps = {
   forSmall?: boolean;
   forLarge?: boolean;
@@ -15,10 +16,12 @@ export function BookActions({
   forLarge,
   id,
 }: BookActionsProps): React.ReactElement {
-  const [isInCart, setIsInCart] = useState(false);
-
   const isFavorite = useAppSelector((state) =>
     state.favorites.favoritesIds.includes(id),
+  );
+
+  const isInCart = useAppSelector((state) =>
+    state.cart.cartItems.some((item: CartItemModel) => item.book_id === id),
   );
 
   const jwt = useAppSelector((state) => state.auth.jwt);
@@ -27,8 +30,11 @@ export function BookActions({
   const dispatch = useAppDispatch();
 
   const handleCartToggle = useCallback(() => {
-    setIsInCart((prev) => !prev);
-    console.log(!isInCart ? 'в корзине' : 'удалено из корзины');
+    if (isAuth) {
+      dispatch(toggleCart(id));
+    } else {
+      dispatch(toggleCartLS(id));
+    }
   }, [isInCart]);
 
   const handleFavoriteToggle = useCallback(() => {

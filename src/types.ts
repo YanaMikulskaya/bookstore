@@ -166,3 +166,35 @@ export type ToggleFavoritesParams = {
   id: number;
   act: 'remove' | 'add';
 };
+
+export type CartBookModel = BookModel & {
+  quantity: number;
+};
+
+export type CartItemModel = {
+  book_id: number;
+  quantity: number;
+};
+
+export type GetCartResponse = {
+  data: CartBookModel[];
+  totalQuantity: number;
+};
+
+export type GetCartItemsResponse = {
+  items: CartItemModel[];
+};
+
+export type ModifyCartResponse = {
+  message: string;
+  data: CartBookModel[];
+  totalQuantity: number;
+};
+
+export type CartState = {
+  cart: CartBookModel[];
+  cartItems: CartItemModel[];
+  totalQuantity: number;
+  cartLoading: boolean;
+  cartError: boolean;
+};

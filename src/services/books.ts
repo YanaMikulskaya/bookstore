@@ -39,7 +39,7 @@ export const requestBook = async (bookId: number): Promise<BookModel> => {
   return response.data;
 };
 
-export const getUserFavorites = async (
+export const getFavorites = async (
   limit: number = 18,
   offset: number = 0,
 ): Promise<FetchFavoritesResponse> => {

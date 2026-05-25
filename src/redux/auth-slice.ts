@@ -113,6 +113,17 @@ export const getUser = createAsyncThunk<UserModel>(
   },
 );
 
+export const logout = createAsyncThunk(
+  'auth/logout',
+  async (_, { rejectWithValue }) => {
+    try {
+      localStorage.removeItem('jwt');
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.error || 'Ошибка входа');
+    }
+  },
+);
+
 const initialState: AuthState = {
   user: null,
   error: false,
@@ -129,14 +140,6 @@ export const authSlice = createSlice({
     clearErrors: (state: AuthState) => {
       state.error = false;
       state.errorMessage = null;
-    },
-    logout: (state: AuthState) => {
-      state.user = null;
-      state.jwt = null;
-      state.isActivated = false;
-      state.error = false;
-      state.errorMessage = null;
-      state.loading = false;
     },
   },
   extraReducers: (builder) => {
@@ -157,7 +160,7 @@ export const authSlice = createSlice({
     builder.addCase(registration.rejected, (state: AuthState, action) => {
       state.error = true;
       state.loading = false;
-      state.errorMessage = (action.payload as string) || 'Ошибка регистрации';
+      state.errorMessage = action.payload as string;
     });
     builder.addCase(activate.pending, (state: AuthState) => {
       state.loading = true;
@@ -177,7 +180,7 @@ export const authSlice = createSlice({
     );
     builder.addCase(activate.rejected, (state: AuthState, action) => {
       state.error = true;
-      state.errorMessage = (action.payload as string) || 'Ошибка активации';
+      state.errorMessage = action.payload as string;
       state.loading = false;
     });
     builder.addCase(login.pending, (state: AuthState) => {
@@ -198,7 +201,7 @@ export const authSlice = createSlice({
     );
     builder.addCase(login.rejected, (state: AuthState, action) => {
       state.error = true;
-      state.errorMessage = (action.payload as string) || 'Ошибка входа';
+      state.errorMessage = action.payload as string;
       state.loading = false;
     });
     builder.addCase(refreshToken.pending, (state: AuthState) => {
@@ -239,8 +242,26 @@ export const authSlice = createSlice({
         (action.payload as string) || 'Не удалось загрузить профиль';
       state.loading = false;
     });
+    builder.addCase(logout.pending, (state: AuthState) => {
+      state.loading = true;
+      state.error = false;
+      state.errorMessage = null;
+    });
+    builder.addCase(logout.fulfilled, (state: AuthState) => {
+      state.user = null;
+      state.jwt = null;
+      state.isActivated = false;
+      state.error = false;
+      state.errorMessage = null;
+      state.loading = false;
+    });
+    builder.addCase(logout.rejected, (state: AuthState) => {
+      state.error = true;
+      state.errorMessage = null;
+      state.loading = false;
+    });
   },
 });
 
-export const { clearErrors, logout } = authSlice.actions;
+export const { clearErrors } = authSlice.actions;
 export const authReducer = authSlice.reducer;

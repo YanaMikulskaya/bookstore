@@ -9,14 +9,16 @@ const authRefreshTokenEndpoint = '/auth/refresh';
 
 // Books
 const booksEndpoint = '/books';
-//const booksByIdEndpoint = (bookId) => `/books/${bookId}`;
 const booksSearchEndpoint = '/books/search';
 const booksPostEndpoint = '/books-with-cover';
 
 // Favorites
 const booksFavoritesEndpoint = '/favorites';
 const booksFavoritesIdsEndpoint = '/favorites/ids';
-//const booksFavoritesByIdEndpoint = (bookId) => `/favorites/${bookId}`;
+
+// Cart
+const booksCartEndpoint = '/cart';
+const booksCartItemsEndpoint = '/cart/items';
 
 export const API = {
   authRegister: authRegisterEndpoint,
@@ -25,10 +27,10 @@ export const API = {
   authUser: authUserEndpoint,
   authRefreshToken: authRefreshTokenEndpoint,
   books: booksEndpoint,
-  //booksById: booksByIdEndpoint,
   booksSearch: booksSearchEndpoint,
   booksPost: booksPostEndpoint,
   booksFavorites: booksFavoritesEndpoint,
   booksFavoritesIds: booksFavoritesIdsEndpoint,
-  //booksFavoritesById: booksFavoritesByIdEndpoint,
+  booksCart: booksCartEndpoint,
+  booksCartItems: booksCartItemsEndpoint,
 };
